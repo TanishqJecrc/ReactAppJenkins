@@ -25,7 +25,7 @@ variable "os" {
 variable "sku_name_plan" {
   description = "Pricing plan of the azure service plan"
   type = string
-  default = "standard"
+  default = "free"
 }
 
 variable "app_service_name" {
@@ -42,17 +42,11 @@ variable "service_plan_name" {
 variable "pricing_plan" {
   description = "Pricing plan of the azure service plan"
   type = string
-  default = "S1"
+  default = "F1"
 }
 
 variable "linux_web_app_name" {
   description = "name of the app service"
   type = string
   default = "linapptanishq"
-}
-
-variable "linux_web_app_slot_name" {
-  description = "name of windows web app slot"
-  type = string
-  default = "linappslottanishq"
 }

@@ -26,15 +26,8 @@ resource "azurerm_linux_web_app" "serviceApp" {
   resource_group_name = azurerm_resource_group.rg.name
   site_config {
             application_stack {
-              dotnet_version = "8.0"
+              node_version = "22 LTS"
             }
             
          }
-}
-
-resource "azurerm_linux_web_app_slot" "deploySlot" {
-  app_service_id = azurerm_linux_web_app.serviceApp.id
-  name = var.linux_web_app_slot_name
-  site_config {
-  }
 }
