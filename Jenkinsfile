@@ -13,7 +13,7 @@ pipeline {
             }
         }
 
-    tage('Setup Node Environment') {
+    stage('Setup Node Environment') {
             steps {
                 dir('demo') {
                     bat 'node -v'
