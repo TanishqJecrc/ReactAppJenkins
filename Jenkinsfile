@@ -13,6 +13,23 @@ pipeline {
             }
         }
 
+    stage('Terraform Init') {
+                steps {
+                    dir('Terraform') {
+                        bat 'terraform init'
+                    }
+                }
+          }
+          stage('Terraform Plan & Apply') {
+            steps {
+                dir('Terraform') {
+                    bat 'terraform plan -out=tfplan'
+                    bat 'terraform apply -auto-approve tfplan'
+                }
+            }
+        }
+
+    
     stage('Setup Node Environment') {
             steps {
                 dir('demo') {
@@ -43,21 +60,7 @@ pipeline {
                 
             }
         }
-         stage('Terraform Init') {
-                steps {
-                    dir('Terraform') {
-                        bat 'terraform init'
-                    }
-                }
-          }
-          stage('Terraform Plan & Apply') {
-            steps {
-                dir('Terraform') {
-                    bat 'terraform plan -out=tfplan'
-                    bat 'terraform apply -auto-approve tfplan'
-                }
-            }
-        }
+         
 
         
 
@@ -69,6 +72,7 @@ pipeline {
                     bat "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID"
                     
                     bat "az webapp deploy --resource-group $RESOURCE_GROUP --name $APP_SERVICE_NAME --src-path ./build.zip --type zip"
+                    bat "del /F /Q build.zip"
                 }
                 }
                    
