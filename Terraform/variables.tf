@@ -48,5 +48,5 @@ variable "pricing_plan" {
 variable "linux_web_app_name" {
   description = "name of the app service"
   type = string
-  default = "linapptanishq"
+  default = "linreactapptanishq"
 }
