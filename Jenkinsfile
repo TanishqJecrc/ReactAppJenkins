@@ -12,10 +12,31 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/TanishqJecrc/ReactAppJenkins.git'
             }
         }
+
+    tage('Setup Node Environment') {
+            steps {
+                dir('demo') {
+                    bat 'node -v'
+                    bat 'npm -v'
+                    bat 'npm install -g npm@latest'
+                }
+            }
+        }
+
+        
+        stage('Clean & Install Dependencies') {
+            steps {
+                dir('demo') {
+                    bat 'rm -rf node_modules package-lock.json' // Clean previous installs
+                    bat 'npm install || echo "Retrying npm install..." && npm install' // Retry if fails
+                    bat 'npm audit fix --force' // Fix vulnerabilities
+                }
+            }
+        }
+        
         stage('ReactBuild') {
             steps {
                 dir('demo') {
-                    bat 'npm install' // Install dependencies
                     bat 'npm run build' // Build the React app
                     bat 'powershell Compress-Archive -Path ./build/* -DestinationPath build.zip' // Archive build output
                 }
