@@ -85,6 +85,10 @@ pipeline {
         }
         failure {
             echo 'Deployment Failed!'
+             withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
+                    bat "del /F /Q build.zip"
+                    bat "az group delete --name $RESOURCE_GROUP_NAME --yes --no-wait"
+                }
         }
     }
 }
