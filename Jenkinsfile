@@ -27,9 +27,10 @@ pipeline {
         stage('Clean & Install Dependencies') {
             steps {
                 dir('demo') {
-                    bat 'rm -rf node_modules package-lock.json' // Clean previous installs
+                    bat 'del package-lock.json' // Clean previous installs
                     bat 'npm install || echo "Retrying npm install..." && npm install' // Retry if fails
                     bat 'npm audit fix --force' // Fix vulnerabilities
+                    
                 }
             }
         }
