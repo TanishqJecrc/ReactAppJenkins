@@ -12,6 +12,16 @@ pipeline {
                 git branch: 'master', url: 'https://github.com/TanishqJecrc/ReactAppJenkins.git'
             }
         }
+        stage('ReactBuild') {
+            steps {
+                dir('demo') {
+                    bat 'npm install' // Install dependencies
+                    bat 'npm run build' // Build the React app
+                    bat 'powershell Compress-Archive -Path ./build/* -DestinationPath build.zip' // Archive build output
+                }
+                
+            }
+        }
          stage('Terraform Init') {
                 steps {
                     dir('Terraform') {
@@ -28,16 +38,7 @@ pipeline {
             }
         }
 
-        stage('ReactBuild') {
-            steps {
-                dir('demo') {
-                    bat 'npm install' // Install dependencies
-                    bat 'npm run build' // Build the React app
-                    bat 'powershell Compress-Archive -Path ./build/* -DestinationPath build.zip' // Archive build output
-                }
-                
-            }
-        }
+        
 
 
         stage('Deploy') {
