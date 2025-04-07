@@ -70,8 +70,8 @@ pipeline {
                dir('demo') {
                     withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                     bat "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID"
-                    bat "az webapp deploy --resource-group $RESOURCE_GROUP --name $APP_SERVICE_NAME --src-path ./build.zip --type zip"
-                    bat "del /F /Q build.zip"
+                    bat "az webapp restart --resource-group $AZURE_RESOURCE_GROUP --name $APP_SERVICE_NAME"
+                    bat "az webapp deploy --resource-group $RESOURCE_GROUP --name $APP_SERVICE_NAME --src-path ./build.zip --type zip --timeout 120"
                 }
                 }
                    
