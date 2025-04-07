@@ -70,7 +70,7 @@ pipeline {
                dir('demo') {
                     withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                     bat "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID"
-                    bat "az webapp restart --resource-group $AZURE_RESOURCE_GROUP --name $APP_SERVICE_NAME"
+                    bat "az webapp restart --resource-group $RESOURCE_GROUP --name $APP_SERVICE_NAME"
                     bat "az webapp deploy --resource-group $RESOURCE_GROUP --name $APP_SERVICE_NAME --src-path ./build.zip --type zip"
                 }
                 }
@@ -85,12 +85,7 @@ pipeline {
         }
         failure {
             echo 'Deployment Failed!'
-            dir('demo'){
-                bat "del /F /Q build.zip"
-            }
-             withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-                    bat "az group delete --name $RESOURCE_GROUP_NAME --yes --no-wait"
-                }
+            
         }
     }
 }
