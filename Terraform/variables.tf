@@ -50,3 +50,9 @@ variable "linux_web_app_name" {
   type = string
   default = "linuxreactapptanishq"
 }
+
+variable "linux_web_app_slot_name" {
+  description = "name of windows web app slot"
+  type = string
+  default = "linuxappslottanishq"
+}
